@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="Utilisateur")
 public class Utilisateur{
 	
-	// DÃ©claration des attributs privÃ©s de classe
+	// Déclaration des attributs privés de classe
 	private int id;
 	private String nom, prenom, mail, login, mdp;
 	
