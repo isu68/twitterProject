@@ -1,5 +1,8 @@
 package common;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -13,6 +16,7 @@ public class Utilisateur{
 	// Déclaration des attributs privés de classe
 	private int id;
 	private String nom, prenom, mail, login, mdp;
+	private ArrayList<Tweet> listeTweets;
 	
 	/**
 	 * Constucteur de la classe (vide)
@@ -27,12 +31,14 @@ public class Utilisateur{
 	 * @param pLogin Login utilisateur
 	 * @param pMdp Mot de pass utilisateur
 	 */
-	public Utilisateur(String pNom, String pPrenom, String pMail, String pLogin, String pMdp) {
+	public Utilisateur(int pId, String pNom, String pPrenom, String pMail, String pLogin, String pMdp) {
+		setId(pId);
 		setNom(pNom);
 		setPrenom(pPrenom);
 		setMail(pMail);
 		setLogin(pLogin);
 		setMdp(pMdp);
+		setListeTweets(new ArrayList<Tweet>());
 	}
 
 	// Accesseurs et modificateurs
@@ -65,6 +71,18 @@ public class Utilisateur{
 	}
 	public void setMdp(String mdp) {
 		this.mdp = mdp;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public ArrayList<Tweet> getListeTweets() {
+		return listeTweets;
+	}
+	public void setListeTweets(ArrayList<Tweet> listeTweets) {
+		this.listeTweets = listeTweets;
 	}
 
 }
