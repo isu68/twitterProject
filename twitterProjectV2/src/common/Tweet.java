@@ -6,6 +6,11 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
+/**
+ * Class Utilisateur du package common
+ * @author poitevia
+ *
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Tweet {
 	
