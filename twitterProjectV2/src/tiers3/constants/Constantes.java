@@ -1,5 +1,7 @@
 package tiers3.constants;
 
+import java.io.File;
+
 public class Constantes {
 
 	public final static int PORT_SERVEUR = 2000;
@@ -15,4 +17,6 @@ public class Constantes {
 	public final static String UTILISATEUR_PREFIXE_SERIALISATION = "utilisateur";
 	
 	public final static String SUFFIXE_XML = ".xml";
+	
+	public final static String FOLDER = "utilisateur"+File.separator;
 }

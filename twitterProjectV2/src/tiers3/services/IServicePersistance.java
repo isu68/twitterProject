@@ -4,6 +4,8 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
+import javax.xml.bind.JAXBException;
+
 import common.Tweet;
 import common.Utilisateur;
 
@@ -13,7 +15,7 @@ public interface IServicePersistance extends Remote {
 	
 	public boolean creerTweet() throws RemoteException;
 	
-	public List<Utilisateur> rechercherTousUtilisateurs() throws RemoteException;
+	public List<Utilisateur> rechercherTousUtilisateurs() throws RemoteException, JAXBException;
 	
 	public List<Tweet> rechercherTousTweets() throws RemoteException ;
 	

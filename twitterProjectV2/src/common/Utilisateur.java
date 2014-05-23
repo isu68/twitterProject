@@ -1,7 +1,6 @@
 package common;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -13,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="Utilisateur")
 public class Utilisateur{
 	
-	// Déclaration des attributs privés de classe
+	// Dï¿½claration des attributs privï¿½s de classe
 	private int id;
 	private String nom, prenom, mail, login, mdp;
 	private ArrayList<Tweet> listeTweets;

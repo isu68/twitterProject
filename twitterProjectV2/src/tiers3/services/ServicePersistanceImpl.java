@@ -9,6 +9,7 @@ import java.util.Random;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 import common.Tweet;
 import common.Utilisateur;
@@ -20,7 +21,7 @@ public class ServicePersistanceImpl implements IServicePersistance {
 	public boolean creerUtilisateur(Utilisateur utilisateur) throws RemoteException {
 		try {
 			
-			// Attribution d'un id à l'utilisateur
+			// Attribution d'un id ï¿½ l'utilisateur
 			int id = new Random().nextInt(99999);
 			utilisateur.setId(id);
 			JAXBContext contexteUtilisateur = JAXBContext.newInstance(Utilisateur.class);
@@ -46,10 +47,30 @@ public class ServicePersistanceImpl implements IServicePersistance {
 	}
 
 	@Override
-	public List<Utilisateur> rechercherTousUtilisateurs()
-			throws RemoteException {
+	public List<Utilisateur> rechercherTousUtilisateurs() throws RemoteException, JAXBException {
+		// Instanciation d'une liste d'utilisateurs vide par dÃ©faut
+		List<Utilisateur> maListeUtilisateur = new ArrayList<Utilisateur>();
+		Utilisateur unUtilisateur;
 		
-		return null;
+		// RÃ©cupÃ©ration et vÃ©rification du dossier de stockage des utilisateurs
+		File repertoire = new File(Constantes.FOLDER);
+		assert repertoire.isDirectory();
+		
+		// Instanciation du context et du Unmarshaller
+		JAXBContext context = JAXBContext.newInstance(Utilisateur.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+		
+		// RÃ©cupÃ©ration de l'ensemble des fichier contenus dans le rÃ©pertoire
+		File[] tousLesFichiers = repertoire.listFiles();
+		if (tousLesFichiers != null) {
+			for (File fichier : tousLesFichiers) {
+				if (!fichier.isDirectory()) {
+					unUtilisateur = (Utilisateur) unmarshaller.unmarshal(new File(fichier.getName()));
+					maListeUtilisateur.add(unUtilisateur);
+				}
+			}
+		}
+		return maListeUtilisateur;
 	}
 
 	@Override
@@ -74,7 +95,7 @@ public class ServicePersistanceImpl implements IServicePersistance {
 	
 	@Override
 	public Utilisateur rechercherUtilisateurParLoginMdp(String login, String motDePasse) throws RemoteException {
-		List<Utilisateur> listeUtilisateur = new ArrayList<Utilisateur>(); // appelé la méthode getListUtilisateurs;
+		List<Utilisateur> listeUtilisateur = new ArrayList<Utilisateur>(); // appelï¿½ la mï¿½thode getListUtilisateurs;
 		for (Utilisateur utilisateur : listeUtilisateur) {
 			if(login == utilisateur.getLogin() && motDePasse == utilisateur.getMdp()){
 				return utilisateur;
@@ -85,7 +106,7 @@ public class ServicePersistanceImpl implements IServicePersistance {
 	
 	@Override
 	public List<Utilisateur> rechercherUtilisateurParNom(String nom) throws RemoteException {
-		List<Utilisateur> listeUtilisateur = new ArrayList<Utilisateur>(); // appelé la méthode getListUtilisateurs;
+		List<Utilisateur> listeUtilisateur = new ArrayList<Utilisateur>(); // appelï¿½ la mï¿½thode getListUtilisateurs;
 		List<Utilisateur> listeRetour = new ArrayList<Utilisateur>();
 		for (Utilisateur utilisateur : listeUtilisateur) {
 			if(nom == utilisateur.getNom()){
@@ -97,7 +118,7 @@ public class ServicePersistanceImpl implements IServicePersistance {
 	
 	@Override
 	public List<Utilisateur> rechercherUtilisateurParPrenom(String prenom) throws RemoteException {
-		List<Utilisateur> listeUtilisateur = new ArrayList<Utilisateur>(); // appelé la méthode getListUtilisateurs;
+		List<Utilisateur> listeUtilisateur = new ArrayList<Utilisateur>(); // appelï¿½ la mï¿½thode getListUtilisateurs;
 		List<Utilisateur> listeRetour = new ArrayList<Utilisateur>();
 		for (Utilisateur utilisateur : listeUtilisateur) {
 			if(prenom == utilisateur.getPrenom()){
