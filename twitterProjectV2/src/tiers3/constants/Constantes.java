@@ -15,4 +15,6 @@ public class Constantes {
 	public final static String UTILISATEUR_PREFIXE_SERIALISATION = "utilisateur";
 	
 	public final static String SUFFIXE_XML = ".xml";
+	
+	public final static String FOLDER = "utilisateur"+File.separator;
 }
