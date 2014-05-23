@@ -74,8 +74,8 @@ public class ServicePersistanceImpl implements IServicePersistance {
 	
 	@Override
 	public Utilisateur rechercherUtilisateurParLoginMdp(String login, String motDePasse) throws RemoteException {
-		List<Utilisateur> listeUtilisateur = new ArrayList<Utilisateur>(); // appelé la méthode getListUtilisateurs;
-		for (Utilisateur utilisateur : listeUtilisateur) {
+		List<Utilisateur> listeUtilisateurs = new ArrayList<Utilisateur>(); // appelé la méthode getListUtilisateurs;
+		for (Utilisateur utilisateur : listeUtilisateurs) {
 			if(login == utilisateur.getLogin() && motDePasse == utilisateur.getMdp()){
 				return utilisateur;
 			}
@@ -85,9 +85,9 @@ public class ServicePersistanceImpl implements IServicePersistance {
 	
 	@Override
 	public List<Utilisateur> rechercherUtilisateurParNom(String nom) throws RemoteException {
-		List<Utilisateur> listeUtilisateur = new ArrayList<Utilisateur>(); // appelé la méthode getListUtilisateurs;
+		List<Utilisateur> listeUtilisateurs = new ArrayList<Utilisateur>(); // appelé la méthode getListUtilisateurs;
 		List<Utilisateur> listeRetour = new ArrayList<Utilisateur>();
-		for (Utilisateur utilisateur : listeUtilisateur) {
+		for (Utilisateur utilisateur : listeUtilisateurs) {
 			if(nom == utilisateur.getNom()){
 				 listeRetour.add(utilisateur);
 			}
@@ -97,9 +97,9 @@ public class ServicePersistanceImpl implements IServicePersistance {
 	
 	@Override
 	public List<Utilisateur> rechercherUtilisateurParPrenom(String prenom) throws RemoteException {
-		List<Utilisateur> listeUtilisateur = new ArrayList<Utilisateur>(); // appelé la méthode getListUtilisateurs;
+		List<Utilisateur> listeUtilisateurs = new ArrayList<Utilisateur>(); // appelé la méthode getListUtilisateurs;
 		List<Utilisateur> listeRetour = new ArrayList<Utilisateur>();
-		for (Utilisateur utilisateur : listeUtilisateur) {
+		for (Utilisateur utilisateur : listeUtilisateurs) {
 			if(prenom == utilisateur.getPrenom()){
 				 listeRetour.add(utilisateur);
 			}
