@@ -11,32 +11,23 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import common.Tweet;
-
+import common.Utilisateur;
 import tiers3.constants.Constantes;
 
 public class ServicePersistanceImpl implements IServicePersistance {
 
 	@Override
-	public boolean creerUtilisateur(Utilisateur utilisateur)
-			throws RemoteException {
+	public boolean creerUtilisateur(Utilisateur utilisateur) throws RemoteException {
 		try {
 			
 			// Attribution d'un id à l'utilisateur
 			int id = new Random().nextInt(99999);
-			utilisateur.setIdUtilisateur(id);
-			
-			JAXBContext contexteUtilisateur = JAXBContext
-					.newInstance(Utilisateur.class);
+			utilisateur.setId(id);
+			JAXBContext contexteUtilisateur = JAXBContext.newInstance(Utilisateur.class);
 			Marshaller marshaller = contexteUtilisateur.createMarshaller();
-			marshaller.setProperty(Constantes.JAXB_PROPRIETE_ENCODING,
-					Constantes.JAXB_PROPRIETE_ENCODING_VALEUR);
+			marshaller.setProperty(Constantes.JAXB_PROPRIETE_ENCODING,Constantes.JAXB_PROPRIETE_ENCODING_VALEUR);
 			marshaller.setProperty(Constantes.JAXB_PROPRIETE_FORMATTED, true);
-			
-
-			marshaller.marshal(utilisateur,
-					new File(Constantes.UTILISATEUR_PREFIXE_SERIALISATION
-							+ utilisateur.getIdUtilisateur()
-							+ Constantes.SUFFIXE_XML));
+			marshaller.marshal(utilisateur,new File(Constantes.UTILISATEUR_PREFIXE_SERIALISATION + utilisateur.getId() + Constantes.SUFFIXE_XML));
 		} catch (JAXBException jaxbe) {
 			jaxbe.printStackTrace();
 			return false;
@@ -71,14 +62,48 @@ public class ServicePersistanceImpl implements IServicePersistance {
 	}
 
 	@Override
-	public List<Tweet> rechercherTweetsParUtilisateur(int id,String nom, String prenom, String login, String motDePasse ) throws RemoteException {
-		
-		return utilisateur.getTweets();
+	public List<Tweet> rechercherTweetsParUtilisateur(Utilisateur utilisateur) throws RemoteException {
+		return utilisateur.getListeTweets();
 	}
 
 	@Override
-	public Utilisateur rechercherUtilisateur() throws RemoteException {
+	public Utilisateur rechercherUtilisateur(int id,String nom, String prenom, String login, String motDePasse) throws RemoteException {
+		
 		return null;
 	}
-
+	
+	@Override
+	public Utilisateur rechercherUtilisateurParLoginMdp(String login, String motDePasse) throws RemoteException {
+		List<Utilisateur> listeUtilisateur = new ArrayList<Utilisateur>(); // appelé la méthode getListUtilisateurs;
+		for (Utilisateur utilisateur : listeUtilisateur) {
+			if(login == utilisateur.getLogin() && motDePasse == utilisateur.getMdp()){
+				return utilisateur;
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	public List<Utilisateur> rechercherUtilisateurParNom(String nom) throws RemoteException {
+		List<Utilisateur> listeUtilisateur = new ArrayList<Utilisateur>(); // appelé la méthode getListUtilisateurs;
+		List<Utilisateur> listeRetour = new ArrayList<Utilisateur>();
+		for (Utilisateur utilisateur : listeUtilisateur) {
+			if(nom == utilisateur.getNom()){
+				 listeRetour.add(utilisateur);
+			}
+		}
+		return listeRetour;
+	}
+	
+	@Override
+	public List<Utilisateur> rechercherUtilisateurParPrenom(String prenom) throws RemoteException {
+		List<Utilisateur> listeUtilisateur = new ArrayList<Utilisateur>(); // appelé la méthode getListUtilisateurs;
+		List<Utilisateur> listeRetour = new ArrayList<Utilisateur>();
+		for (Utilisateur utilisateur : listeUtilisateur) {
+			if(prenom == utilisateur.getPrenom()){
+				 listeRetour.add(utilisateur);
+			}
+		}
+		return listeRetour;
+	}
 }
