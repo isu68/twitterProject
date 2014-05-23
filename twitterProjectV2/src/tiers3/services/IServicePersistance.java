@@ -17,7 +17,7 @@ public interface IServicePersistance extends Remote {
 	
 	public List<Utilisateur> rechercherTousUtilisateurs() throws RemoteException, JAXBException;
 	
-	public List<Tweet> rechercherTousTweets() throws RemoteException ;
+	public List<Tweet> rechercherTousTweets() throws RemoteException, JAXBException ;
 	
 	public List<Tweet> rechercherTweetsParUtilisateur(Utilisateur utilisateur) throws RemoteException;
 	

@@ -74,12 +74,15 @@ public class ServicePersistanceImpl implements IServicePersistance {
 	}
 
 	@Override
-	public List<Tweet> rechercherTousTweets() throws RemoteException {
+	public List<Tweet> rechercherTousTweets() throws RemoteException, JAXBException {
 		List<Tweet> listeTweets = new ArrayList<Tweet>();
-		// Pour chaque utilisateur 
-		for (Utilisateur utilisateur) {
-			listeTweets.addAll(utilisateur.getTweets());
+
+		List<Utilisateur> listeUtilisateurs = rechercherTousUtilisateurs();
+		// Pour chaque utilisateur
+		for (Utilisateur utilisateur : listeUtilisateurs) {
+			listeTweets.addAll(utilisateur.getListeTweets());
 		}
+		return listeTweets;
 	}
 
 	@Override
@@ -90,6 +93,19 @@ public class ServicePersistanceImpl implements IServicePersistance {
 	@Override
 	public Utilisateur rechercherUtilisateur(int id,String nom, String prenom, String login, String motDePasse) throws RemoteException {
 		
+		return null;
+	}
+	
+	
+	public Utilisateur rechercherUtilisateurParId(int idUtilisateur)
+			throws RemoteException, JAXBException  {
+		List<Utilisateur> listeUtilisateurs = rechercherTousUtilisateurs();
+		// Pour chaque utilisateur on recherche l'utilisateur
+		for (Utilisateur utilisateur : listeUtilisateurs) {
+			if (utilisateur.getId() == idUtilisateur) {
+				return utilisateur;
+			}
+		}
 		return null;
 	}
 	
