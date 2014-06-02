@@ -13,7 +13,7 @@ public interface IServicePersistance extends Remote {
 
 	public boolean creerUtilisateur(Utilisateur utilisateur) throws RemoteException;
 	
-	public boolean creerTweet() throws RemoteException;
+	public boolean creerTweet(Utilisateur utilisateur, Tweet tweet) throws RemoteException;
 	
 	public List<Utilisateur> rechercherTousUtilisateurs() throws RemoteException, JAXBException;
 	

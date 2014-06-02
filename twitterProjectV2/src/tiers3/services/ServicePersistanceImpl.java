@@ -17,10 +17,12 @@ import tiers3.constants.Constantes;
 
 public class ServicePersistanceImpl implements IServicePersistance {
 
+	/**
+	 * Création d'un nouvel utilisateur
+	 */
 	@Override
 	public boolean creerUtilisateur(Utilisateur utilisateur) throws RemoteException {
 		try {
-			
 			// Attribution d'un id � l'utilisateur
 			int id = new Random().nextInt(99999);
 			utilisateur.setId(id);
@@ -36,8 +38,31 @@ public class ServicePersistanceImpl implements IServicePersistance {
 		return true;
 	}
 
+	/**
+	 * Création d'un tweet en fonction de l'utilisateur
+	 */
 	@Override
-	public boolean creerTweet() throws RemoteException {
+	public boolean creerTweet(Utilisateur utilisateur, Tweet tweet) throws RemoteException {
+		try {
+			utilisateur.ajoutTweet(tweet);
+			JAXBContext contexteTweet = JAXBContext.newInstance(Utilisateur.class);
+			Marshaller marshaller = contexteTweet.createMarshaller();
+			marshaller.setProperty(Constantes.JAXB_PROPRIETE_ENCODING, Constantes.JAXB_PROPRIETE_ENCODING_VALEUR);
+			marshaller.setProperty(Constantes.JAXB_PROPRIETE_FORMATTED, true);
+			// Récupération et vérification du dossier de stockage des utilisateurs
+			File repertoire = new File(Constantes.FOLDER);
+			assert repertoire.isDirectory();
+			File[] tousLesFichiers = repertoire.listFiles();
+			for (File fichier : tousLesFichiers) {
+				if (fichier.getName().equals(Constantes.UTILISATEUR_PREFIXE_SERIALISATION + utilisateur.getId() + Constantes.SUFFIXE_XML)) {
+					fichier.delete();
+					marshaller.marshal(utilisateur,new File(Constantes.UTILISATEUR_PREFIXE_SERIALISATION + utilisateur.getId() + Constantes.SUFFIXE_XML));
+				}
+			}
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 	}
 
@@ -46,6 +71,9 @@ public class ServicePersistanceImpl implements IServicePersistance {
 		return false;
 	}
 
+	/**
+	 * Retourne la liste de tous les utilisateurs de l'application
+	 */
 	@Override
 	public List<Utilisateur> rechercherTousUtilisateurs() throws RemoteException, JAXBException {
 		// Instanciation d'une liste d'utilisateurs vide par défaut
@@ -73,14 +101,28 @@ public class ServicePersistanceImpl implements IServicePersistance {
 		return maListeUtilisateur;
 	}
 
+	/**
+	 * Retourne la liste de tous les tweets de l'application
+	 */
 	@Override
 	public List<Tweet> rechercherTousTweets() throws RemoteException, JAXBException {
 		List<Tweet> listeTweets = new ArrayList<Tweet>();
-
-		List<Utilisateur> listeUtilisateurs = rechercherTousUtilisateurs();
-		// Pour chaque utilisateur
-		for (Utilisateur utilisateur : listeUtilisateurs) {
-			listeTweets.addAll(utilisateur.getListeTweets());
+		Tweet unTweet;
+		
+		// Récupération et vérification du dossier de stockage des utilisateurs
+		File repertoire = new File(Constantes.FOLDER);
+		assert repertoire.isDirectory();
+		
+		// Instanciation du context et du Unmarshaller
+		JAXBContext context = JAXBContext.newInstance(Tweet.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+		
+		File[] tousLesFichiers = repertoire.listFiles();
+		for (File fichier : tousLesFichiers) {
+			if (!fichier.isDirectory()) {
+				unTweet = (Tweet) unmarshaller.unmarshal(new File(fichier.getName()));
+				listeTweets.add(unTweet);
+			}
 		}
 		return listeTweets;
 	}

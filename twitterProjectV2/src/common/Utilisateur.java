@@ -84,5 +84,21 @@ public class Utilisateur{
 	public void setListeTweets(ArrayList<Tweet> listeTweets) {
 		this.listeTweets = listeTweets;
 	}
+	
+	/**
+	 * Ajout d'un tweet à la liste de tweets postés par l'utilisateur
+	 * @param tweet
+	 */
+	public void ajoutTweet(Tweet tweet) {
+		this.listeTweets.add(tweet);
+	}
+	
+	/**
+	 * Suppression d'un tweet à la liste de tweets postés par l'utilisateur
+	 * @param tweet
+	 */
+	public void suppTweet(Tweet tweet){
+		this.listeTweets.add(tweet);
+	}
 
 }
