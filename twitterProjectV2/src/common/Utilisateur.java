@@ -1,7 +1,8 @@
 package common;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Random;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -11,9 +12,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  */
 @XmlRootElement(name="Utilisateur")
-public class Utilisateur{
+public class Utilisateur extends UnicastRemoteObject{
 	
 	// D�claration des attributs priv�s de classe
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String nom, prenom, mail, login, mdp;
 	private ArrayList<Tweet> listeTweets;
@@ -21,7 +23,7 @@ public class Utilisateur{
 	/**
 	 * Constucteur de la classe (vide)
 	 */
-	public Utilisateur(){}
+	public Utilisateur() throws RemoteException{}
 	
 	/**
 	 * Constructeur de la classe
@@ -31,7 +33,7 @@ public class Utilisateur{
 	 * @param pLogin Login utilisateur
 	 * @param pMdp Mot de pass utilisateur
 	 */
-	public Utilisateur(int pId, String pNom, String pPrenom, String pMail, String pLogin, String pMdp) {
+	public Utilisateur(int pId, String pNom, String pPrenom, String pMail, String pLogin, String pMdp) throws RemoteException{
 		setId(pId);
 		setNom(pNom);
 		setPrenom(pPrenom);

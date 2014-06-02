@@ -1,5 +1,7 @@
 package common;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -12,29 +14,31 @@ import javax.xml.bind.annotation.XmlAccessorType;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Tweet {
-	
+public class Tweet extends UnicastRemoteObject{
+
+	private static final long serialVersionUID = 1L;
+
 	//Permet de faire le lien entre un utilisateur et ses Tweets
 	private int idUtilisateur;
 
-	//Date de création du Tweet
+	//Date de crï¿½ation du Tweet
 	private String date;
 	//Permet de modifier le format de la date pour obtenir : jj/mm/aa hh:mm
 	DateFormat shortDateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
 
-	//Contenu associé à un Tweet
+	//Contenu associï¿½ ï¿½ un Tweet
 	private String contenu;
 	
 	/**
-	 * Constructeur vide obligatoire pour la sérialisation XML
+	 * Constructeur vide obligatoire pour la sï¿½rialisation XML
 	 */
-	Tweet(){}
+	public Tweet() throws RemoteException{}
 	
 	/**
 	 * Constructeur de la classe
-	 * @param contenuTweet Contenu associé au Tweet
+	 * @param contenuTweet Contenu associï¿½ au Tweet
 	 */
-	Tweet(int idUtilisateur, String contenuTweet) {
+	public Tweet(int idUtilisateur, String contenuTweet) throws RemoteException {
 		this.idUtilisateur = idUtilisateur;
 		this.date = shortDateFormat.format(new Date());
 		this.contenu = contenuTweet;
